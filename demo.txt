@@ -1,0 +1,6 @@
+vagrant up
+vagrant ssh
+----
+cd /vagrant
+git clone https://github.com/mmartinezespichan/demo-java-project-base.git
+cd demo-java-project-base
