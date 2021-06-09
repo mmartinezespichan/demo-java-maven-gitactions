@@ -12,7 +12,7 @@ public class Application {
     @RequestMapping("/")
     public String home() {
         return "<html><boby>"
-        		+ "<h2>Hello, World! from Trunkbase v.1.0</h2><br /><br /><br />"      
+        		+ "<h2>Hello, World!</h2><br /><br /><br />"      
         		+ "<img src=\"/image.jpg\">"  		
         		+ "</boby></html>";
     }
