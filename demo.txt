@@ -4,3 +4,58 @@ vagrant ssh
 cd /vagrant
 git clone https://github.com/mmartinezespichan/demo-java-project-base.git
 cd demo-java-project-base
+
+----
+- Agregar template
+- Actualizar version de java
+- Crear app en heroku
+https://dashboard.heroku.com/apps
+APP_NAME: demo-java-gc-devops
+- Obtener ApiKey
+https://dashboard.heroku.com/account
+
+- Configurar secretos en github
+Heroku:
+HEROKU_APP_NAME: demo-java-gc-devops
+HEROKU_API_KEY: XXXXXXXX
+
+- Configurar workflow
+name: CI/CD Workflow Java/Maven
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  buildAndPush:
+
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 8
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+    - name: Build with Maven
+      run: mvn -B install --file pom.xml
+
+- Adicionar pasos de despliegue
+    - name: Login to Heroku Container registry
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login 
+    - name: Build and push
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web 
+    - name: Release
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web 
+  
