@@ -13,7 +13,7 @@ public class Application {
     public String home() {
         return "<html><boby>"
         		+ "<h2>Hello, World!</h2><br /><br /><br />"      
-        		+ "<img src=\"/image.jpg\">"  		
+        		+ "<img src=\"/image.png\">"  		
         		+ "</boby></html>";
     }
 
